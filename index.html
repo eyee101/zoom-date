@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d2748">
+<title>A very important question 💕</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin:0; min-height:100%; font-family: ui-rounded, "SF Pro Rounded", "Comic Sans MS", system-ui, sans-serif; }
+  body {
+    min-height:100vh; overflow:hidden; color:#fff8ef;
+    background:
+      radial-gradient(circle at 18% 75%, rgba(255,174,122,.28), transparent 28%),
+      radial-gradient(circle at 82% 78%, rgba(255,135,164,.22), transparent 26%),
+      linear-gradient(#172342 0%, #202b4d 48%, #563b49 100%);
+    display:grid; place-items:center;
+  }
+  .stars { position:fixed; inset:0; pointer-events:none; opacity:.75;
+    background-image: radial-gradient(#fff 1px, transparent 1px);
+    background-size: 61px 61px;
+  }
+  .card {
+    position:relative; width:min(94vw,820px); min-height:min(88vh,760px);
+    padding:46px 28px 34px; text-align:center; overflow:hidden;
+    border:1px solid rgba(255,255,255,.18); border-radius:34px;
+    background:rgba(17,24,49,.50); backdrop-filter:blur(7px);
+    box-shadow:0 25px 80px rgba(0,0,0,.35);
+  }
+  .tiny { font-size:clamp(18px,3vw,27px); letter-spacing:.04em; }
+  h1 { margin:22px auto 12px; max-width:680px; font-size:clamp(42px,8vw,78px); line-height:.98; font-weight:800; }
+  h1 .pink { color:#ff8799; text-shadow:0 0 20px rgba(255,119,145,.25); }
+  .hearts { color:#ff8799; font-size:28px; letter-spacing:12px; margin:12px 0 20px; }
+  .yes {
+    display:inline-block; width:min(88%,470px); margin-top:8px; padding:20px 28px;
+    border-radius:999px; border:2px solid #ffb2bf; color:white; text-decoration:none;
+    background:linear-gradient(180deg,#ff8fa2,#ee718a); font-size:clamp(26px,5vw,40px); font-weight:800;
+    box-shadow:0 12px 34px rgba(255,105,135,.35), inset 0 1px rgba(255,255,255,.45);
+    transition:.15s transform;
+  }
+  .yes:active { transform:scale(.97); }
+  .sub { margin:10px 0 24px; font-size:18px; opacity:.9; }
+  #maybe {
+    position:relative; z-index:5; border:0; border-radius:999px; padding:13px 28px;
+    font:700 18px inherit; color:#513941; background:#fff4ed; box-shadow:0 8px 24px rgba(0,0,0,.18);
+    transition:left .18s ease, top .18s ease, transform .18s ease;
+  }
+  .note { margin-top:23px; font-size:17px; opacity:.85; }
+  .animal { position:absolute; bottom:-18px; font-size:clamp(100px,20vw,180px); filter:drop-shadow(0 12px 14px rgba(0,0,0,.25)); }
+  .bear { left:-12px; transform:rotate(5deg); }
+  .bunny { right:-8px; transform:rotate(-4deg); }
+  .agenda {
+    position:absolute; left:24px; bottom:145px; text-align:left; transform:rotate(-3deg);
+    background:#f7e2d5; color:#5b4141; padding:14px 17px; border-radius:10px;
+    box-shadow:0 8px 22px rgba(0,0,0,.22); font-size:14px; line-height:1.65;
+  }
+  .us {
+    position:absolute; right:24px; top:24px; transform:rotate(3deg);
+    background:#f7e2d5; color:#5b4141; padding:12px 14px; border-radius:8px;
+    box-shadow:0 8px 22px rgba(0,0,0,.2); font-size:14px;
+  }
+  .success {
+    position:fixed; inset:0; display:none; place-items:center; z-index:20; text-align:center;
+    background:rgba(22,27,53,.94); padding:30px;
+  }
+  .success div { font-size:clamp(32px,7vw,64px); font-weight:800; }
+  @media(max-width:620px) {
+    .card { min-height:90vh; padding-top:70px; }
+    .agenda { display:none; } .us { top:16px; right:16px; font-size:12px; }
+    .animal { font-size:105px; }
+    h1 { margin-top:28px; }
+  }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<main class="card" id="card">
+  <div class="us">same place,<br>different screens,<br>still us ♡</div>
+  <div class="tiny">I have a very important question… ♡</div>
+  <h1>Will you go on a<br><span class="pink">Zoom date</span><br>with me?</h1>
+  <div class="hearts">♡ ♡ ♡</div>
+
+  <a class="yes" id="yes" href="https://us04web.zoom.us/j/78654860789?pwd=2PmOGSxSlPdeUanYaDn4u86w0bUskC.1">♥ &nbsp; YES!! 💕 &nbsp; ♥</a>
+  <div class="sub">(take me to our date!)</div>
+
+  <button id="maybe">hmmm… maybe? 🤔💕</button>
+  <div class="note">but you know you want to! ˶ᵔ ᵕ ᵔ˶</div>
+
+  <div class="agenda">our date agenda: ♡<br>talk ♡<br>catch up ♡<br>be silly ♡<br>miss you ♡</div>
+  <div class="animal bear">🧸</div>
+  <div class="animal bunny">🐰</div>
+</main>
+
+<div class="success" id="success"><div>YAYYY!! 💕🥹<br><span style="font-size:.45em;font-weight:600">opening our Zoom date…</span></div></div>
+
+<script>
+const maybe = document.getElementById('maybe');
+const card = document.getElementById('card');
+let dodges = 0;
+
+function dodge(e) {
+  if (e) e.preventDefault();
+  dodges++;
+  const rect = card.getBoundingClientRect();
+  const maxX = Math.max(20, rect.width - 190);
+  const maxY = Math.max(20, rect.height - 80);
+  maybe.style.position = 'absolute';
+  maybe.style.left = (15 + Math.random() * (maxX - 30)) + 'px';
+  maybe.style.top = (120 + Math.random() * Math.max(30, maxY - 150)) + 'px';
+  maybe.style.transform = `rotate(${-8 + Math.random()*16}deg)`;
+  maybe.textContent = dodges > 3 ? "okay okay… YES? 🥺" : "hmmm… maybe? 🤔💕";
+}
+maybe.addEventListener('mouseenter', dodge);
+maybe.addEventListener('touchstart', dodge, {passive:false});
+maybe.addEventListener('click', dodge);
+
+document.getElementById('yes').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('success').style.display='grid';
+  setTimeout(() => { window.location.href = this.href; }, 850);
+});
+</script>
+</body>
+</html>
